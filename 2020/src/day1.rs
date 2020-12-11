@@ -28,7 +28,7 @@ pub fn fix_expense_report() -> u32 {
     let mut report = EXPENSE_REPORT.clone();
     report.sort();
     let rev_report: Vec<_> = report.iter().rev().collect();
-    let final_value = report.iter().try_fold(0, |acc, first| {
+    let final_value = report.iter().try_fold(0, |_, first| {
         let val = rev_report.iter().find(|&&second| first + second == 2020);
         if let Some(second) = val {
             return Err(*second * first);
@@ -51,22 +51,20 @@ pub fn fix_expense_report() -> u32 {
 pub fn fix_expense_report_triple() -> u32 {
     let mut report = EXPENSE_REPORT.clone();
     report.sort();
-    let final_value = report.iter().try_fold(0, |acc, first| {
+    let final_value = report.iter().try_fold(0, |_, first| {
         let first_iter = iter::once(first).cycle();
 
-        let val = first_iter
-            .zip(&report)
-            .try_fold(0, |_acc, (&first, second)| {
-                if first + second > 2020 {
-                    return Ok(0);
-                }
-                let final_value = report.iter().find(|&third| first + second + third == 2020);
+        let val = first_iter.zip(&report).try_fold(0, |_, (&first, second)| {
+            if first + second > 2020 {
+                return Ok(0);
+            }
+            let final_value = report.iter().find(|&third| first + second + third == 2020);
 
-                if let Some(third) = final_value {
-                    return Err(first * second * third);
-                }
-                Ok(0)
-            });
+            if let Some(third) = final_value {
+                return Err(first * second * third);
+            }
+            Ok(0)
+        });
         if let Err(ret) = val {
             return Err(ret);
         } else {

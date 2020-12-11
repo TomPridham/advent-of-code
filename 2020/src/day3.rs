@@ -100,7 +100,6 @@ pub fn tree_collision_detector_v2() -> u64 {
                     collisions
                 },
             );
-            println!("{}", collisions);
             collisions * total_collisions
         },
     )
