@@ -10,6 +10,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 use crate::day1::{calculate_depth, calculate_sliding_depth};
 use crate::day2::{calculate_final_course, calculate_final_course_with_aim};
@@ -19,7 +20,8 @@ use crate::day5::{find_danger_vents, find_danger_vents_diag};
 use crate::day6::{model_lanternfish_growth, model_lanternfish_growth_naive};
 use crate::day7::{find_optimal_crab_depth_constant, find_optimal_crab_depth_linear};
 use crate::day8::{find_display_sum, find_easy_digits};
+use crate::day9::{mul_largest_basins, sum_risk_levels};
 
 fn main() {
-    find_display_sum();
+    mul_largest_basins();
 }
