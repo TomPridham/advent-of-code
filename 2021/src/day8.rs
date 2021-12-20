@@ -102,7 +102,7 @@ pub fn find_easy_digits() {
     let count = DISPLAY_OUTPUTS
         .into_iter()
         .fold(0, |total_digits, display_output| {
-            let output_values = display_output.split(" | ").skip(1).next().unwrap();
+            let output_values = display_output.split(" | ").nth(1).unwrap();
             let count = output_values.split(' ').fold(0, |acc, val| {
                 let len = val.len();
                 if len == 7 || len <= 4 {
@@ -238,20 +238,20 @@ impl SevenSegmentMap {
             7 => 8,
             5 => {
                 if digit.chars().all(|c| self.five.contains(c)) {
-                    return 5;
+                    5
                 } else if digit.chars().all(|c| self.two.contains(c)) {
-                    return 2;
+                    2
                 } else {
-                    return 3;
+                    3
                 }
             }
             6 => {
                 if digit.chars().all(|c| self.six.contains(c)) {
-                    return 6;
+                    6
                 } else if digit.chars().all(|c| self.nine.contains(c)) {
-                    return 9;
+                    9
                 } else {
-                    return 0;
+                    0
                 }
             }
             _ => 0,

@@ -96,8 +96,8 @@ pub fn model_lanternfish_growth() {
 
     let starting_days_count: [u64; 5] =
         LANTERNFISH
-            .to_vec()
-            .into_iter()
+            .iter()
+            .copied()
             .fold([0, 0, 0, 0, 0], |mut acc, fish| {
                 match fish {
                     1 => acc[0] += 1,

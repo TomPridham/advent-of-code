@@ -101,7 +101,7 @@ pub fn calculate_life_support() {
                 } else {
                     off_bits.push(*binary_num)
                 }
-                return (on_bits, off_bits);
+                (on_bits, off_bits)
             },
         );
 
@@ -124,7 +124,7 @@ pub fn calculate_life_support() {
                 } else {
                     off_bits.push(*binary_num)
                 }
-                return (on_bits, off_bits);
+                (on_bits, off_bits)
             },
         );
 

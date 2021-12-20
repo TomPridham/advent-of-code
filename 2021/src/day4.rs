@@ -60,15 +60,7 @@
 
 fn check_bingo(board: [bool; 25]) -> bool {
     let mut cols: Vec<bool> = (0..5_usize)
-        .map(|col| {
-            board
-                .into_iter()
-                .skip(col)
-                .step_by(5)
-                .take(5)
-                .collect::<Vec<bool>>()
-        })
-        .flatten()
+        .flat_map(|col| board.into_iter().skip(col).step_by(5).take(5))
         .collect();
     cols.extend_from_slice(&board);
     cols.chunks(5).any(|row| row.iter().all(|cell| *cell))
@@ -82,26 +74,22 @@ fn sum_unmarked(board: [u8; 25], marked_board: [bool; 25]) -> u32 {
 pub fn find_winning_board() {
     let mut marked_boards = [[false; 25]; 100];
     BINGO_NUMBERS.iter().find(|&&bingo_number| {
-        BINGO_BOARDS
-            .iter()
-            .enumerate()
-            .find(|(i, board)| {
-                if let Some(pos) = board
-                    .iter()
-                    .position(|&board_num| board_num == bingo_number)
-                {
-                    marked_boards[*i][pos] = true;
-                    if check_bingo(marked_boards[*i]) {
-                        println!(
-                            "{}",
-                            sum_unmarked(**board, marked_boards[*i]) * bingo_number as u32
-                        );
-                        return true;
-                    }
+        BINGO_BOARDS.iter().enumerate().any(|(i, board)| {
+            if let Some(pos) = board
+                .iter()
+                .position(|&board_num| board_num == bingo_number)
+            {
+                marked_boards[i][pos] = true;
+                if check_bingo(marked_boards[i]) {
+                    println!(
+                        "{}",
+                        sum_unmarked(*board, marked_boards[i]) * bingo_number as u32
+                    );
+                    return true;
                 }
-                false
-            })
-            .is_some()
+            }
+            false
+        })
     });
 }
 

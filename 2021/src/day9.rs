@@ -30,20 +30,16 @@ pub fn sum_risk_levels() {
                         return row_risk;
                     }
                 }
-                if y + 1 < HEIGHTMAP.len() {
-                    if HEIGHTMAP[y + 1].as_bytes()[x] as char <= point {
-                        return row_risk;
-                    }
+                if y + 1 < HEIGHTMAP.len() && HEIGHTMAP[y + 1].as_bytes()[x] as char <= point {
+                    return row_risk;
                 }
                 if let Some(left) = x.checked_sub(1) {
                     if HEIGHTMAP[y].as_bytes()[left] as char <= point {
                         return row_risk;
                     }
                 }
-                if x + 1 < row.len() {
-                    if HEIGHTMAP[y].as_bytes()[x + 1] as char <= point {
-                        return row_risk;
-                    }
+                if x + 1 < row.len() && HEIGHTMAP[y].as_bytes()[x + 1] as char <= point {
+                    return row_risk;
                 }
                 row_risk + point.to_digit(10).unwrap() + 1
             })
@@ -109,7 +105,7 @@ pub fn check_in_bounds(
     if (0..height as isize).contains(&r) && (0..width as isize).contains(&c) {
         return Some((r as usize, c as usize));
     }
-    return None;
+    None
 }
 
 fn find_basin(start: (usize, usize)) -> u32 {
@@ -117,7 +113,7 @@ fn find_basin(start: (usize, usize)) -> u32 {
 
     let mut queue: Vec<(usize, usize)> = vec![start];
     let mut visited: Vec<(usize, usize)> = vec![];
-    while queue.len() > 0 {
+    while !queue.is_empty() {
         let (curr_row, curr_col) = queue.pop().unwrap();
         SURROUND.iter().for_each(|(surround_row, surround_col)| {
             if let Some((valid_row, valid_col)) =
@@ -136,10 +132,9 @@ fn find_basin(start: (usize, usize)) -> u32 {
     basin_size
 }
 pub fn mul_largest_basins() {
-    let basins: Vec<Vec<u32>> = HEIGHTMAP
+    let mut basins: Vec<u32> = HEIGHTMAP
         .iter()
-        .enumerate()
-        .map(|(y, row)| {
+        .enumerate().flat_map(|(y, row)| {
             row.chars()
                 .enumerate()
                 .fold(vec![], |mut basins, (x, point)| {
@@ -148,20 +143,16 @@ pub fn mul_largest_basins() {
                             return basins;
                         }
                     }
-                    if y + 1 < HEIGHTMAP.len() {
-                        if HEIGHTMAP[y + 1].as_bytes()[x] as char <= point {
-                            return basins;
-                        }
+                    if y + 1 < HEIGHTMAP.len() && HEIGHTMAP[y + 1].as_bytes()[x] as char <= point {
+                        return basins;
                     }
                     if let Some(left) = x.checked_sub(1) {
                         if HEIGHTMAP[y].as_bytes()[left] as char <= point {
                             return basins;
                         }
                     }
-                    if x + 1 < row.len() {
-                        if HEIGHTMAP[y].as_bytes()[x + 1] as char <= point {
-                            return basins;
-                        }
+                    if x + 1 < row.len() && HEIGHTMAP[y].as_bytes()[x + 1] as char <= point {
+                        return basins;
                     }
                     let b = find_basin((y, x));
                     basins.push(b);
@@ -169,9 +160,8 @@ pub fn mul_largest_basins() {
                 })
         })
         .collect();
-    let mut basins: Vec<u32> = basins.into_iter().flatten().collect();
-    basins.sort();
-    let m: u32 = basins[basins.len() - 3..basins.len()].into_iter().product();
+    basins.sort_unstable();
+    let m: u32 = basins[basins.len() - 3..basins.len()].iter().product();
     println!("{}", m);
 }
 const AHEIGHTMAP: [&str; 5] = [
