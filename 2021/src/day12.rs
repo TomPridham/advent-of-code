@@ -186,7 +186,7 @@ impl<'a> Node<'a> {
 pub fn find_cave_exits() {
     let arena: RefCell<Vec<Node<'_>>> = RefCell::new(Vec::with_capacity(CAVE_CONNECTIONS.len()));
     for connection in CAVE_CONNECTIONS.iter() {
-        let (opening, exit) = match connection.split("-").collect::<Vec<&str>>()[..] {
+        let (opening, exit) = match connection.split('-').collect::<Vec<&str>>()[..] {
             [first, second, ..] => (first, second),
             _ => unreachable!(),
         };
@@ -287,7 +287,7 @@ pub fn find_cave_exits() {
 pub fn find_cave_exits2() {
     let arena: RefCell<Vec<Node<'_>>> = RefCell::new(Vec::with_capacity(CAVE_CONNECTIONS.len()));
     for connection in CAVE_CONNECTIONS.iter() {
-        let (opening, exit) = match connection.split("-").collect::<Vec<&str>>()[..] {
+        let (opening, exit) = match connection.split('-').collect::<Vec<&str>>()[..] {
             [first, second, ..] => (first, second),
             _ => unreachable!(),
         };
