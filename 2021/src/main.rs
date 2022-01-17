@@ -7,6 +7,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
@@ -21,6 +22,7 @@ use crate::day10::{fix_incomplete_lines, sum_illegal_chars};
 use crate::day11::{calculate_total_flashes, find_synced_flash};
 use crate::day12::{find_cave_exits, find_cave_exits2};
 use crate::day13::calculate_visible_dots;
+use crate::day14::compute_polymerization;
 use crate::day2::{calculate_final_course, calculate_final_course_with_aim};
 use crate::day3::{calculate_life_support, calculate_power_consumption};
 use crate::day4::{find_losing_board, find_winning_board};
@@ -31,5 +33,5 @@ use crate::day8::{find_display_sum, find_easy_digits};
 use crate::day9::{mul_largest_basins, sum_risk_levels};
 
 fn main() {
-    calculate_visible_dots(12);
+    compute_polymerization(40);
 }
