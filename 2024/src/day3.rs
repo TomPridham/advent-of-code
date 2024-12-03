@@ -65,7 +65,6 @@ pub fn get_enabled_muls() -> i64 {
     let valid_mul_regex = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
 
     let enabled_program: String = disabled_muls_re.split(corrupted_program).collect();
-    println!("{enabled_program}");
     let mul_pairs: Vec<(i64, i64)> = valid_mul_regex
         .captures_iter(&enabled_program)
         .map(|caps| {
