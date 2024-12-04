@@ -2,9 +2,10 @@
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 mod read_input;
 
 fn main() {
-    let res = day3::get_enabled_muls();
+    let res = day4::find_x_mas();
     println!("{res}");
 }
